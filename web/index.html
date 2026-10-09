@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">تاريخ تغييرات الوضع القائم في المسجد الأقصى (1917 - 2026)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Web Icons (No SVG) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plotly.js CDN -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldCustom: '#0f5132',
+                        emeraldDark: '#0a3622',
+                        goldCustom: '#d97706',
+                        goldLight: '#f59e0b',
+                        crimsonCustom: '#dc2626',
+                        navyCustom: '#1e293b',
+                        sandCustom: '#fef3c7',
+                        bgLight: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-bgLight text-slate-800 font-sans scroll-smooth leading-relaxed">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-navyCustom text-white shadow-lg border-b-2 border-goldCustom">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                <i class="fa-solid fa-mosque text-goldCustom text-2xl"></i>
+                <div>
+                    <h1 class="font-bold text-lg md:text-xl tracking-wide" data-i18n="headerTitle">مرصد الوضع القائم في المسجد الأقصى</h1>
+                    <p class="text-xs text-slate-300" data-i18n="headerSubtitle">مسار التحولات التفكيكية (1917 - 2026) | دراسة تفاعلية مستندة لمقاربات زياد بحيص</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4 rtl:space-x-reverse mt-2 sm:mt-0">
+                <nav class="hidden lg:flex space-x-6 rtl:space-x-reverse text-sm font-medium">
+                    <a href="#overview" class="hover:text-goldCustom transition-colors" data-i18n="navOverview">التأصيل التاريخي</a>
+                    <a href="#strategy" class="hover:text-goldCustom transition-colors" data-i18n="navStrategy">أبعاد الإحلال الديني</a>
+                    <a href="#timeline" class="hover:text-goldCustom transition-colors" data-i18n="navTimeline">الخط الزمني</a>
+                    <a href="#geopolitics" class="hover:text-goldCustom transition-colors" data-i18n="navGeopolitics">قوس التهويد</a>
+                    <a href="#scenarios" class="hover:text-goldCustom transition-colors" data-i18n="navScenarios">السيناريوهات المستقبلية</a>
+                </nav>
+
+                <!-- Language Switcher Button -->
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="bg-goldCustom hover:bg-goldLight text-slate-900 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center space-x-1 rtl:space-x-reverse transition-colors shadow">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="langBtnText">English</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner & KPIs -->
+    <section id="overview" class="bg-gradient-to-br from-emeraldDark via-emeraldCustom to-navyCustom text-white py-12 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="bg-goldCustom text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider mb-3 inline-block" data-i18n="heroBadge">دراسة بيانية واستشرافية</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight" data-i18n="heroTitle">التغييرات الهيكلية على الوضع التاريخي القائم للمسجد الأقصى المبارك</h2>
+                <p class="text-slate-200 text-sm md:text-base" data-i18n="heroDesc">
+                    تحليل شامل للتحولات التي شهدها المسجد الأقصى بمساحته الكلية (144 دونماً) منذ دخول الانتداب البريطاني عام 1917 وحتى عام 2026، مستعرضاً تآكل منظومة "الوضع القائم" (Status Quo) الصادرة عام 1852، ورصد آليات التقسيم الزماني والمكاني والتأسيس المعنوي للهيكل.
+                </p>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 text-center hover:bg-white/20 transition-all">
+                    <div class="text-goldCustom text-3xl font-black mb-1">100%</div>
+                    <div class="text-xs uppercase text-slate-300 font-semibold" data-i18n="kpi1Title">إدارة ملكية إسلامية خالصة</div>
+                    <p class="text-xs text-slate-200 mt-2" data-i18n="kpi1Desc">وفق فرمان الوضع القائم العثماني عام 1852 ومعاهدة برلين 1878</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 text-center hover:bg-white/20 transition-all">
+                    <div class="text-goldCustom text-3xl font-black mb-1">6.5 <span data-i18n="hoursUnit">ساعة</span></div>
+                    <div class="text-xs uppercase text-slate-300 font-semibold" data-i18n="kpi2Title">ساعات الاقتحام اليومية (2026)</div>
+                    <p class="text-xs text-slate-200 mt-2" data-i18n="kpi2Desc">توسع الاقتحامات الإسرائيلية اليومية على فترتين صباحية ومسائية</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 text-center hover:bg-white/20 transition-all">
+                    <div class="text-goldCustom text-3xl font-black mb-1">63+</div>
+                    <div class="text-xs uppercase text-slate-300 font-semibold" data-i18n="kpi3Title">حفرية موثقة حول وأسفل الأقصى</div>
+                    <p class="text-xs text-slate-200 mt-2" data-i18n="kpi3Desc">شبكة ممتدة تهدف لبناء مدينة توراتية تحت الأرض وتغيير الأساسات</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 text-center hover:bg-white/20 transition-all">
+                    <div class="text-goldCustom text-3xl font-black mb-1">4,248</div>
+                    <div class="text-xs uppercase text-slate-300 font-semibold" data-i18n="kpi4Title">أعلى رقم مقتحمين في يوم واحد</div>
+                    <p class="text-xs text-slate-200 mt-2" data-i18n="kpi4Desc">سُجل خلال مواسم الأعياد التوراتية عام 2026 بإشراف رسمي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-10 space-y-16">
+
+        <!-- SECTION 1: Historical Status Quo Context & Evolution -->
+        <section class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-emeraldCustom">
+            <div class="mb-6">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse mb-2">
+                    <span class="w-8 h-8 rounded-full bg-emeraldCustom text-white flex items-center justify-center font-bold text-sm">1</span>
+                    <h3 class="text-2xl font-bold text-navyCustom" data-i18n="sec1Title">التأصيل التاريخي وتفكيك السيادة (1852 - 1967)</h3>
+                </div>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed" data-i18n="sec1Desc">
+                    يُشير مصطلح "الوضع القائم" (Status Quo) قانونياً إلى الفرمان الصادر عن السلطان العثماني عبد المجيد الأول عام 1852، والذي أقر بالسيادة والإدارة الإسلامية الخالصة للمسجد الأقصى المبارك وحائط البراق. تم تثبيت هذه المعاهدة دولياً في مؤتمر باريس (1856) ومعاهدة برلين (1878 المادة 62). ومع احتلال بريطانيا للقدس عام 1917، بدأت محاولات تقويض هذه المنظومة لصالح الحركة الصهيونية، وصولاً إلى احتلال عام 1967 وتجريد دائرة الأوقاف من حصرية التحكم بالأبواب عبر مصادرة مفتاح "باب المغاربة".
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                    <div class="chart-container bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                        <canvas id="historicalEraChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="p-4 bg-emeraldCustom/5 rounded-xl border-r-4 border-emeraldCustom ltr:border-r-0 ltr:border-l-4">
+                        <h4 class="font-bold text-navyCustom text-base mb-1" data-i18n="sec1Box1Title">تفسير التحول التاريخي</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" data-i18n="sec1Box1Desc">
+                            يُظهر الرسم البياني التراجع التدريجي لنسبة التحكم والسيادة الميدانية للأوقاف الإسلامية. في حين كانت الأوقاف تمتلك سيادة بنسبة 100% حتى عام 1917، أدى الانتداب البريطاني (1917-1948) إلى إدخال أولى التعديلات عقب ثورة البراق 1929 ورغم تأكيد لجنة شو (1930) إسلامية البراق، إلا أن مصادرة إسرائيل لمفتاح "باب المغاربة" عام 1967 شكلت نقطة الارتكاز لسلب السيادة الأمنية الخارجية.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-xl border-r-4 border-goldCustom ltr:border-r-0 ltr:border-l-4">
+                        <h4 class="font-bold text-navyCustom text-base mb-1" data-i18n="sec1Box2Title">الرعاية الهاشمية والأدوار القانونية</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed" data-i18n="sec1Box2Desc">
+                            لعبت الرعاية الهاشمية (منذ الإعمار الأول 1924) دوراً حاسماً في صيانة المعالم الهندسية، وتأطير الوصاية قانونياً عبر المادة (9) من معاهدة وادي عربة (1994) واتفاقية الوصاية المقرة مع السلطة الفلسطينية عام 2013، لتثبيت الهوية المعمارية ضد الحفريات والانتهاكات.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Tripartite Deconstruction Framework (Ziad Bhies Theory) -->
+        <section id="strategy" class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-goldCustom">
+            <div class="mb-8">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse mb-2">
+                    <span class="w-8 h-8 rounded-full bg-goldCustom text-white flex items-center justify-center font-bold text-sm">2</span>
+                    <h3 class="text-2xl font-bold text-navyCustom" data-i18n="sec2Title">استراتيجية "الإحلال الديني" والأبعاد الثلاثة للعدوان (مقاربة زياد بحيص)</h3>
+                </div>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed" data-i18n="sec2Desc">
+                    يقدم الباحث المقدسي المتخصص زياد بحيص إطاراً تحليلياً يوضح أن العدوان الإسرائيلي لم يعد يهدف فقط للسيطرة الأمنية، بل انتقل إلى "الإحلال الديني التام" لتحويل الأقصى من مقدس إسلامي خالص إلى مقدس يهودي إسلامي مشترك كخطوة تمهيدية لإقامة "الهيكل الثالث". تتكامل هذه الاستراتيجية عبر ثلاثة مسارات رئيسية:
+                </p>
+            </div>
+
+            <!-- 3 Pillars Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-emeraldCustom/10 text-emeraldCustom rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-navyCustom mb-2" data-i18n="pillar1Title">1. التقسيم الزماني</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-i18n="pillar1Desc">
+                        فرض أوقات اقتحام يومية حصرية للمستوطنين (صباحية ومسائية) وتوسيعها حتى بلغت 6.5 ساعة يومياً في 2026، مع إفراغ المسجد من المصلين واستغلال مواسم الأعياد التوراتية لاحتكار الزمان.
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-goldCustom/10 text-goldCustom rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-navyCustom mb-2" data-i18n="pillar2Title">2. التقسيم المكاني</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-i18n="pillar2Desc">
+                        استهداف المنطقة الشرقية ومصلى باب الرحمة والمساحات المشجرة المحيطة باقتطاع جغرافي ثابت لبناء كنيس يهودي دائم، وحظر الأعمال الخدمية والترميمية للجمعيات الإسلامية فيها.
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-crimsonCustom/10 text-crimsonCustom rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-torah"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-navyCustom mb-2" data-i18n="pillar3Title">3. التأسيس المعنوي والطقوسي</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-i18n="pillar3Desc">
+                        ممارسة الطقوس التوراتية المباشرة داخل الساحات (السجود الملحمي، النفخ بالشوفار، إدخال كتب الصلاة، محاولات ذبح القرابين)، لإضفاء صبغة قدسية يهودية فعلية وإلغاء صفة المسجد.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Charts Dual Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="font-bold text-center text-navyCustom mb-3 text-sm" data-i18n="chart2Title">تطور ساعات الاقتحام اليومية (2000 - 2026)</h4>
+                    <div class="chart-container bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <canvas id="intrusionHoursChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2 text-center" data-i18n="chart2Sub">
+                        يوضح الرسم البياني النمو المتسارع لساعات الاقتحام اليومية المفروضة قسراً منذ انتفاضة الأقصى 2000 وتراجع صلاحيات الأوقاف عقب تفاهمات كيري 2015.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-center text-navyCustom mb-3 text-sm" data-i18n="chart3Title">مؤشر التصعيد في فرض الطقوس التوراتية (2015 vs 2026)</h4>
+                    <div class="chart-container bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <canvas id="ritualRadarChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2 text-center" data-i18n="chart3Sub">
+                        مقارنة رادارية تعكس الانتقال الدراماتيكي من مجرد "الزيارة الهادئة" إلى الممارسة الطقوسية الشاملة وعسكرة ساحات المسجد.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Interactive Filterable Timeline -->
+        <section id="timeline" class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-navyCustom">
+            <div class="mb-6">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse mb-2">
+                    <span class="w-8 h-8 rounded-full bg-navyCustom text-white flex items-center justify-center font-bold text-sm">3</span>
+                    <h3 class="text-2xl font-bold text-navyCustom" data-i18n="sec3Title">الخط الزمني للمحطات الهيكلية والهبات الشعبية (1917 - 2026)</h3>
+                </div>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed" data-i18n="sec3Desc">
+                    تسرد هذه الوحدة المفاعيل التفاعلية لأهم المواجهات والهبات الشعبية الفلسطينية والمحطات القانونية والسياسية التي تصدت لمشاريع فرض التهويد وأعادت صياغة معادلات الردع الميداني.
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+                <button onclick="filterTimeline('all')" id="filterAll" class="tl-btn active bg-navyCustom text-white px-4 py-2 rounded-lg text-xs font-bold transition-all" data-i18n="btnAll">الكل (1917-2026)</button>
+                <button onclick="filterTimeline('mandate')" class="tl-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-all" data-i18n="btnMandate">الانتداب والحكم الأردني</button>
+                <button onclick="filterTimeline('occupation')" class="tl-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-all" data-i18n="btnOccupation">الاحتلال وتفاهمات كيري</button>
+                <button onclick="filterTimeline('uprisings')" class="tl-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold transition-all" data-i18n="btnUprisings">الهبات والرباط الشعبي</button>
+            </div>
+
+            <!-- Dynamic Timeline Cards Container -->
+            <div id="timelineContainer" class="space-y-6 relative border-r-2 rtl:border-r-2 ltr:border-r-0 ltr:border-l-2 border-slate-200 pr-6 rtl:pr-6 ltr:pr-0 ltr:pl-6 mr-3 rtl:mr-3 ltr:mr-0 ltr:ml-3">
+                <!-- Javascript will render dynamic items here -->
+            </div>
+
+            <!-- Uprisings Impact Summary Chart -->
+            <div class="mt-12 pt-8 border-t border-slate-200">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-6">
+                        <h4 class="font-bold text-navyCustom text-base mb-3 text-center lg:text-right ltr:lg:text-left" data-i18n="uprisingChartTitle">تحليل نتائج الهبات الشعبية ومواجهات الدفاع</h4>
+                        <div class="chart-container bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <canvas id="uprisingOutcomeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 space-y-4">
+                        <div class="p-4 bg-emeraldCustom/10 rounded-xl border-r-4 border-emeraldCustom ltr:border-r-0 ltr:border-l-4">
+                            <h5 class="font-bold text-emeraldDark text-sm mb-1" data-i18n="uprisingBox1Title"><i class="fa-solid fa-shield-halved ml-2 rtl:ml-2 ltr:mr-2"></i>هبة باب الأسباط (2017)</h5>
+                            <p class="text-xs text-slate-600 leading-relaxed" data-i18n="uprisingBox1Desc">أثبتت القدرة الحصرية للرباط الشعبي والاعتصامات المدنية على إجبار سلطات الاحتلال على إزالة البوابات الإلكترونية والكاميرات الذكية وإفشال فرض السيادة الأمنية المطلقة.</p>
+                        </div>
+                        <div class="p-4 bg-goldCustom/10 rounded-xl border-r-4 border-goldCustom ltr:border-r-0 ltr:border-l-4">
+                            <h5 class="font-bold text-amber-900 text-sm mb-1" data-i18n="uprisingBox2Title"><i class="fa-solid fa-door-open ml-2 rtl:ml-2 ltr:mr-2"></i>هبة باب الرحمة (2019)</h5>
+                            <p class="text-xs text-slate-600 leading-relaxed" data-i18n="uprisingBox2Desc">نجح الجماهير في كسر السلاسل الحديدية وإعادة فتح المصلى المغلق منذ عام 2003، مما وجه ضربة استباقية لمخطط التقسيم المكاني في الساحة الشرقية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Geopolitical Shift & "Judaization Arch" -->
+        <section id="geopolitics" class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-crimsonCustom">
+            <div class="mb-6">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse mb-2">
+                    <span class="w-8 h-8 rounded-full bg-crimsonCustom text-white flex items-center justify-center font-bold text-sm">4</span>
+                    <h3 class="text-2xl font-bold text-navyCustom" data-i18n="sec4Title">التحولات الجيوسياسية ومفهوم "قوس التهويد"</h3>
+                </div>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed" data-i18n="sec4Desc">
+                    يؤكد الباحث زياد بحيص أن استهداف الأقصى يمثل المحور الأساسي ضمن "خطة الحسم" (التي طرحها سموتريتش عام 2017) لتغيير الهوية الديموغرافية والجغرافية عبر إقامة "قوس تهويدي" يمتد من الخليل جنوباً، مروراً ببيت لحم، وصولاً إلى القدس الشرقية. هدف هذا القوس هو نقل ثقل الاستيطان التوراتي إلى قلب الجغرافيا المقدسة وإسقاط أي إمكانية لسيادة فلسطينية.
+                </p>
+            </div>
+
+            <!-- Plotly WebGL Geographic Pressure Chart -->
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <h4 class="font-bold text-navyCustom mb-2 text-center text-sm" data-i18n="plotlyTitle">توزيع كثافة الضغوط التهويدية والاستيطانية عبر محور (الخليل - القدس)</h4>
+                <div id="plotlyHeatmapContainer" class="w-full h-80"></div>
+                <p class="text-xs text-slate-500 mt-2 text-center" data-i18n="plotlySub">
+                    رسم بياني احصائي (مُنفذ بتقنية Canvas/WebGL عبر Plotly) يوضح تركز الكثافة الاستيطانية والحفريات والتضييقات الأمنية في نطاق البلدة القديمة ومحيط المسجد الأقصى.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Future Scenarios & Conflict Outcomes -->
+        <section id="scenarios" class="bg-white rounded-2xl shadow-md p-6 md:p-8 border-t-4 border-emeraldCustom">
+            <div class="mb-8">
+                <div class="flex items-center space-x-3 rtl:space-x-reverse mb-2">
+                    <span class="w-8 h-8 rounded-full bg-emeraldCustom text-white flex items-center justify-center font-bold text-sm">5</span>
+                    <h3 class="text-2xl font-bold text-navyCustom" data-i18n="sec5Title">السيناريوهات المستقبلية وتوقعات مآلات الصراع</h3>
+                </div>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed" data-i18n="sec5Desc">
+                    استناداً إلى تحليل المسارات التاريخية ومعطيات التأسيس الطقوسي لعام 2026، يمكن استشراف مستقبل "الوضع القائم" للمسجد الأقصى وفق ثلاثة سيناريوهات رئيسية تتنازعها إرادة فرض السيطرة الصهيونية وقدرة الردع والمقاومة الفلسطينية:
+                </p>
+            </div>
+
+            <!-- 3 Scenario Cards Container -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <!-- Scenario 1 -->
+                <div class="bg-gradient-to-b from-slate-50 to-amber-50/50 p-6 rounded-xl border border-amber-200 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 rtl:right-0 rtl:left-auto ltr:left-0 ltr:right-auto bg-amber-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg rtl:rounded-bl-lg ltr:rounded-br-lg" data-i18n="scen1Badge">السيناريو الأول</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-navyCustom mt-2 mb-3" data-i18n="scen1Title">اكتمال نموذج "المسجد الإبراهيمي"</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4" data-i18n="scen1Desc">
+                            الاستيلاء بالقوة الخشنة على الساحة الشرقية وباب الرحمة واقتطاعها رسمياً لبناء كنيس يهودي، مع فرض تقسيم زماني حاسم يتضمن تفريغ المسجد بالكامل أثناء الأعياد التوراتية وتقليص دور الأوقاف إلى النظافة والصيانة فقط.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-amber-200/60 flex justify-between items-center text-xs">
+                        <span class="text-slate-50"><span data-i18n="probText">مستوى الاحتمالية:</span> <strong class="text-amber-700" data-i18n="scen1Prob">مرتفع جداً</strong></span>
+                        <span class="text-slate-500"><span data-i18n="impactText">التأثير:</span> <strong class="text-crimsonCustom" data-i18n="scen1Impact">كارثي</strong></span>
+                    </div>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="bg-gradient-to-b from-slate-50 to-blue-50/50 p-6 rounded-xl border border-blue-200 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 rtl:right-0 rtl:left-auto ltr:left-0 ltr:right-auto bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg rtl:rounded-bl-lg ltr:rounded-br-lg" data-i18n="scen2Badge">السيناريو الثاني</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-navyCustom mt-2 mb-3" data-i18n="scen2Title">التغيير الهندسي والمعماري الهيكلي</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4" data-i18n="scen2Desc">
+                            بناء جسر فولاذي مرتفع يربط طريق باب المغاربة بصحن قبة الصخرة مباشرة لدخول الآليات العسكرية المصفحة، وتوسيع شبكة الحفريات لتصبح طبقة توراتية كاملة زاحفة أسفل المسجد تحول الأقصى إلى مجرد مصلى سطحي معلق.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-blue-200/60 flex justify-between items-center text-xs">
+                        <span class="text-slate-500"><span data-i18n="probText">مستوى الاحتمالية:</span> <strong class="text-blue-700" data-i18n="scen2Prob">متوسط - مرتفع</strong></span>
+                        <span class="text-slate-500"><span data-i18n="impactText">التأثير:</span> <strong class="text-crimsonCustom" data-i18n="scen2Impact">وجودي</strong></span>
+                    </div>
+                </div>
+
+                <!-- Scenario 3 -->
+                <div class="bg-gradient-to-b from-slate-50 to-red-50/50 p-6 rounded-xl border border-red-200 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 rtl:right-0 rtl:left-auto ltr:left-0 ltr:right-auto bg-crimsonCustom text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg rtl:rounded-bl-lg ltr:rounded-br-lg" data-i18n="scen3Badge">السيناريو الثالث</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-navyCustom mt-2 mb-3" data-i18n="scen3Title">الانفجار والرباط وانكفاء المشروع</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4" data-i18n="scen3Desc">
+                            تسبب المبالغات الطقوسية (مثل ذبح القرابين أو هدم أجزاء) في اندلاع هبة شعبية شاملة ومواجهة إقليمية مركية، تفرض معادلات ردع جديدة تُجبر سلطات الاحتلال على التراجع المجبر وتجميد إجراءات التقسيم.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-red-200/60 flex justify-between items-center text-xs">
+                        <span class="text-slate-500"><span data-i18n="probText">مستوى الاحتمالية:</span> <strong class="text-red-700" data-i18n="scen3Prob">متوقع بشدة</strong></span>
+                        <span class="text-slate-500"><span data-i18n="impactText">التأثير:</span> <strong class="text-emeraldCustom" data-i18n="scen3Impact">تحول استراتيجي</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario Matrix Chart -->
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <h4 class="font-bold text-navyCustom mb-2 text-center text-sm" data-i18n="scenChartTitle">تقييم السيناريوهات المستقبلية (مؤشر الاحتمالية مقابل خطورة التأثير)</h4>
+                <div class="chart-container">
+                    <canvas id="scenarioChart"></canvas>
+                </div>
+                <p class="text-xs text-slate-500 mt-2 text-center" data-i18n="scenChartSub">
+                    رسم بياني شريطي مقارن يوضح التوازن الحرج بين احتمالات تنفيذ المخططات الإسرائيلية وقدرة الكبح الشعبية والإقليمية.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Analytical Conclusion -->
+    <footer class="bg-navyCustom text-white py-10 px-4 mt-16 border-t-4 border-goldCustom">
+        <div class="max-w-7xl mx-auto space-y-6 text-center md:text-right ltr:md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div class="md:col-span-8 space-y-2">
+                    <h3 class="text-lg font-bold text-goldCustom"><i class="fa-solid fa-scroll ml-2 rtl:ml-2 ltr:mr-2"></i><span data-i18n="footerTitle">خلاصة واستنتاجات الدراسة البحثية</span></h3>
+                    <p class="text-xs text-slate-300 leading-relaxed" data-i18n="footerDesc">
+                        يؤكد التتبع التاريخي الموثق أن "الوضع القائم" الأصيل الصادر عام 1852 لم يعد حقيقة موجدة ميدانياً بفعل التفليك المنهجي الإسرائيلي المتواصل. إن القفزة الخطيرة المنفذة بحلول عام 2026 تتجاوز مجرد التقسيم الزماني والمكاني نحو **"التأسيس المعنوي والطقوسي للهيكل"**. تظل خيارات الحفاظ على إسلامية الأقصى مرهونة بمدى فاعلية الرباط الشعبي المقدسي، والوصاية الهاشمية، وتفعيل أوراق الضغط الإقليمية لمنع حسم الصراع.
+                    </p>
+                </div>
+                <div class="md:col-span-4 text-center">
+                    <div class="inline-block p-4 bg-white/5 rounded-xl border border-white/10">
+                        <i class="fa-solid fa-book-open text-goldCustom text-3xl mb-2"></i>
+                        <div class="text-xs font-bold text-slate-200" data-i18n="footerDept">إعداد وحدة الدراسات والمؤشرات المقدسية</div>
+                        <div class="text-[10px] text-slate-400 mt-1" data-i18n="footerDate">تاريخ التحديث البياناتي: 2026</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-slate-700 text-center text-[11px] text-slate-400" data-i18n="footerCopyright">
+                جميع البيانات التاريخية والتحليلية مستندة إلى وثائق المحاكم الشرعية، تقارير الأوقاف الإسلامية، وأدبيات الباحث زياد بحيص.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic & i18n Engine -->
+    <script>
+        // Current Language State
+        let currentLang = 'ar';
+
+        // i18n Dictionaries
+        const i18nData = {
+            ar: {
+                pageTitle: 'تاريخ تغييرات الوضع القائم في المسجد الأقصى (1917 - 2026)',
+                headerTitle: 'مرصد الوضع القائم في المسجد الأقصى',
+                headerSubtitle: 'مسار التحولات التفكيكية (1917 - 2026) | دراسة تفاعلية مستندة لمقاربات زياد بحيص',
+                navOverview: 'التأصيل التاريخي',
+                navStrategy: 'أبعاد الإحلال الديني',
+                navTimeline: 'الخط الزمني',
+                navGeopolitics: 'قوس التهويد',
+                navScenarios: 'السيناريوهات المستقبلية',
+                heroBadge: 'دراسة بيانية واستشرافية',
+                heroTitle: 'التغييرات الهيكلية على الوضع التاريخي القائم للمسجد الأقصى المبارك',
+                heroDesc: 'تحليل شامل للتحولات التي شهدها المسجد الأقصى بمساحته الكلية (144 دونماً) منذ دخول الانتداب البريطاني عام 1917 وحتى عام 2026، مستعرضاً تآكل منظومة "الوضع القائم" (Status Quo) الصادرة عام 1852، ورصد آليات التقسيم الزماني والمكاني والتأسيس المعنوي للهيكل.',
+                kpi1Title: 'إدارة ملكية إسلامية خالصة',
+                kpi1Desc: 'وفق فرمان الوضع القائم العثماني عام 1852 ومعاهدة برلين 1878',
+                kpi2Title: 'ساعات الاقتحام اليومية (2026)',
+                kpi2Desc: 'توسع الاقتحامات الإسرائيلية اليومية على فترتين صباحية ومسائية',
+                kpi3Title: 'حفرية موثقة حول وأسفل الأقصى',
+                kpi3Desc: 'شبكة ممتدة تهدف لبناء مدينة توراتية تحت الأرض وتغيير الأساسات',
+                kpi4Title: 'أعلى رقم مقتحمين في يوم واحد',
+                kpi4Desc: 'سُجل خلال مواسم الأعياد التوراتية عام 2026 بإشراف رسمي',
+                hoursUnit: 'ساعة',
+                sec1Title: 'التأصيل التاريخي وتفكيك السيادة (1852 - 1967)',
+                sec1Desc: 'يُشير مصطلح "الوضع القائم" (Status Quo) قانونياً إلى الفرمان الصادر عن السلطان العثماني عبد المجيد الأول عام 1852، والذي أقر بالسيادة والإدارة الإسلامية الخالصة للمسجد الأقصى المبارك وحائط البراق. تم تثبيت هذه المعاهدة دولياً في مؤتمر باريس (1856) ومعاهدة برلين (1878 المادة 62). ومع احتلال بريطانيا للقدس عام 1917، بدأت محاولات تقويض هذه المنظومة لصالح الحركة الصهيونية، وصولاً إلى احتلال عام 1967 وتجريد دائرة الأوقاف من حصرية التحكم بالأبواب عبر مصادرة مفتاح "باب المغاربة".',
+                sec1Box1Title: 'تفسير التحول التاريخي',
+                sec1Box1Desc: 'يُظهر الرسم البياني التراجع التدريجي لنسبة التحكم والسيادة الميدانية للأوقاف الإسلامية. أدت الانتداب البريطاني واحتلال 1967 بمصادرة مفتاح باب المغاربة إلى تحويل السيطرة الخارجية للاحتلال.',
+                sec1Box2Title: 'الرعاية الهاشمية والأدوار القانونية',
+                sec1Box2Desc: 'لعبت الرعاية الهاشمية (منذ 1924) دوراً حاسماً في صيانة المعالم المعمارية وتثبيت الحق الإسلامي عبر اتفاقيات الوصاية الدولية.',
+                sec2Title: 'استراتيجية "الإحلال الديني" والأبعاد الثلاثة للعدوان (مقاربة زياد بحيص)',
+                sec2Desc: 'يقدم الباحث المقدسي زياد بحيص إطاراً تحليلياً يوضح أن العدوان انتقل من التحكم الأمني إلى "الإحلال الديني التام" لتحويل المسجد الأقصى لمقدس مشترك تمهيداً لبناء الهيكل.',
+                pillar1Title: '1. التقسيم الزماني',
+                pillar1Desc: 'فرض أوقات اقتحام يومية حصرية للمستوطنين (صباحية ومسائية) وتوسيعها حتى بلغت 6.5 ساعة يومياً في 2026.',
+                pillar2Title: '2. التقسيم المكاني',
+                pillar2Desc: 'استهداف المنطقة الشرقية ومصلى باب الرحمة لاقتطاع جغرافي ثابت لبناء كنيس يهودي دائم.',
+                pillar3Title: '3. التأسيس المعنوي والطقوسي',
+                pillar3Desc: 'ممارسة الطقوس التوراتية المباشرة داخل الساحات (السجود الملحمي، النفخ بالشوفار، وتقديم القرابين) لإلغاء صفة المسجد.',
+                chart2Title: 'تطور ساعات الاقتحام اليومية (2000 - 2026)',
+                chart2Sub: 'يوضح النمو المتسارع لساعات الاقتحام اليومية المفروضة قسراً عقب انتفاضة الأقصى وتفاهمات كيري.',
+                chart3Title: 'مؤشر التصعيد في فرض الطقوس التوراتية (2015 vs 2026)',
+                chart3Sub: 'مقارنة رادارية تعكس الانتقال من "الزيارة الهادئة" إلى فرض الممارسة الطقوسية الشاملة.',
+                sec3Title: 'الخط الزمني للمحطات الهيكلية والهبات الشعبية (1917 - 2026)',
+                sec3Desc: 'تسرد هذه الوحدة المفاعيل التفاعلية لأهم المواجهات والهبات الشعبية الفلسطينية والمحطات القانونية والسياسية التي تصدت للتهويد.',
+                btnAll: 'الكل (1917-2026)',
+                btnMandate: 'الانتداب والحكم الأردني',
+                btnOccupation: 'الاحتلال وتفاهمات كيري',
+                btnUprisings: 'الهبات والرباط الشعبي',
+                uprisingChartTitle: 'تحليل نتائج الهبات الشعبية ومواجهات الدفاع',
+                uprisingBox1Title: 'هبة باب الأسباط (2017)',
+                uprisingBox1Desc: 'أثبتت القدرة الحصرية للرباط الشعبي والاعتصامات المدنية على إجبار الاحتلال على إزالة البوابات الإلكترونية والكاميرات.',
+                uprisingBox2Title: 'هبة باب الرحمة (2019)',
+                uprisingBox2Desc: 'نجحت الجماهير في إعادة فتح المصلى المغلق منذ 2003، مفشلة المخطط الأول للتقسيم المكاني.',
+                sec4Title: 'التحولات الجيوسياسية ومفهوم "قوس التهويد"',
+                sec4Desc: 'تأكيد مفهوم "قوس التهويد" الممتد من الخليل إلى القدس ضمن خطة الحسم لنقل الثقل الاستيطاني التوراتي لقلب المقدرات المقدسة.',
+                plotlyTitle: 'توزيع كثافة الضغوط التهويدية والاستيطانية عبر محور (الخليل - القدس)',
+                plotlySub: 'رسم بياني احصائي (Canvas/WebGL) يوضح تركز الكثافة الاستيطانية والحفريات والتضييقات الأمنية.',
+                sec5Title: 'السيناريوهات المستقبلية وتوقعات مآلات الصراع',
+                sec5Desc: 'استشراف مستقبل "الوضع القائم" وفق 3 سيناريوهات تتنازعها مشاريع التهويد مع قدرة الردع والمقاومة الشعبية:',
+                scen1Badge: 'السيناريو الأول',
+                scen1Title: 'اكتمال نموذج "المسجد الإبراهيمي"',
+                scen1Desc: 'الاستيلاء بالقوة الخشنة على الساحة الشرقية وباب الرحمة لبناء كنيس، وفرض تقسيم زماني ومكاني كلي.',
+                scen1Prob: 'مرتفع جداً',
+                scen1Impact: 'كارثي',
+                scen2Badge: 'السيناريو الثاني',
+                scen2Title: 'التغيير الهندسي والمعماري الهيكلي',
+                scen2Desc: 'بناء جسر فولاذي مرتفع وتوسيع شبكة الحفريات السفلية لتحويل الأقصى إلى مصلى معلق فوق طبقة توراتية.',
+                scen2Prob: 'متوسط - مرتفع',
+                scen2Impact: 'وجودي',
+                scen3Badge: 'السيناريو الثالث',
+                scen3Title: 'الانفجار والرباط وانكفاء المشروع',
+                scen3Desc: 'اندلاع مواجهة إقليمية شاملة بسبب الانتهاكات الطقوسية تفرض معادلة ردع تُجبر الاحتلال على التراجع.',
+                scen3Prob: 'متوقع بشدة',
+                scen3Impact: 'تحول استراتيجي',
+                probText: 'مستوى الاحتمالية:',
+                impactText: 'التأثير:',
+                scenChartTitle: 'تقييم السيناريوهات المستقبلية (مؤشر الاحتمالية مقابل خطورة التأثير)',
+                scenChartSub: 'رسم بياني شريطي مقارن يوضح التوازن الحرج بين احتمالات تنفيذ المخططات وقدرة الردع الشعبية.',
+                footerTitle: 'خلاصة واستنتاجات الدراسة البحثية',
+                footerDesc: 'يؤكد التتبع التاريخي الموثق أن "الوضع القائم" الأصيل الصادر عام 1852 لم يعد حقيقة موجودة ميدانياً بفعل التفكيك الإسرائيلي. تظل حماية الأقصى مرهونة بالرباط الشعبي والوصاية الهاشمية وتفعيل الردع الإقليمي.',
+                footerDept: 'إعداد وحدة الدراسات والمؤشرات المقدسية',
+                footerDate: 'تاريخ التحديث البياناتي: 2026',
+                footerCopyright: 'جميع البيانات التاريخية والتحليلية مستندة إلى وثائق المحاكم الشرعية وتقارير الأوقاف وأدبيات الباحث زياد بحيص.'
+            },
+            en: {
+                pageTitle: 'Al-Aqsa Status Quo Historical Shifts (1917 - 2026)',
+                headerTitle: 'Al-Aqsa Status Quo Observatory',
+                headerSubtitle: 'Deconstructive Shift Trajectory (1917 - 2026) | Interactive Study based on Ziad Bhies Analysis',
+                navOverview: 'Historical Foundations',
+                navStrategy: 'Religious Substitution',
+                navTimeline: 'Timeline',
+                navGeopolitics: 'Judaization Arch',
+                navScenarios: 'Future Scenarios',
+                heroBadge: 'Data & Forecast Study',
+                heroTitle: 'Structural Changes to the Historical Status Quo of Al-Aqsa Mosque',
+                heroDesc: 'Comprehensive analysis of transformations across Al-Aqsa Mosque total area (144 dunams) from the British Mandate in 1917 to 2026, tracking the erosion of the 1852 Status Quo framework, temporal/spatial divisions, and moral Temple establishment.',
+                kpi1Title: 'Exclusive Islamic Ownership & Admin',
+                kpi1Desc: 'Under Ottoman Status Quo Firman 1852 & Treaty of Berlin 1878',
+                kpi2Title: 'Daily Incursion Hours (2026)',
+                kpi2Desc: 'Expansion of Israeli daily incursions into morning & afternoon sessions',
+                kpi3Title: 'Documented Excavation Sites',
+                kpi3Desc: 'Extensive underground network targeting foundations and subterranean spaces',
+                kpi4Title: 'Peak Daily Settler Incursion Count',
+                kpi4Desc: 'Recorded during 2026 Jewish holiday seasons under official protection',
+                hoursUnit: 'Hours',
+                sec1Title: 'Historical Foundations & Sovereignty Erosion (1852 - 1967)',
+                sec1Desc: 'Legally, "Status Quo" refers to Ottoman Sultan Abdulmejid I Decree of 1852, confirming exclusive Islamic administration of Al-Aqsa Mosque and Al-Buraq Wall. Internationalized at Treaty of Berlin (1878). Following British capture in 1917, systematic erosion began, leading to the 1967 occupation and confiscation of Bab al-Maghariba keys.',
+                sec1Box1Title: 'Historical Shift Analysis',
+                sec1Box1Desc: 'The chart illustrates the decline of Islamic Waqf operational control. The British Mandate and 1967 key confiscations incrementally shifted external security controls to occupation forces.',
+                sec1Box2Title: 'Hashemite Custodianship & Legal Roles',
+                sec1Box2Desc: 'Hashemite Custodianship (since 1924) played a vital role preserving structural landmarks and framing legal protection via Wadi Araba (1994) & 2013 Agreements.',
+                sec2Title: 'Strategy of "Religious Substitution" & Tripartite Aggression Framework',
+                sec2Desc: 'Jerusalem scholar Ziad Bhies outlines that Israeli aggression shifted from security control to "Total Religious Substitution", aiming to transform Al-Aqsa into a shared site preceding Temple construction.',
+                pillar1Title: '1. Temporal Division',
+                pillar1Desc: 'Enforcing daily exclusive settler entry slots, expanding to 6.5 hours daily by 2026 while emptying the compound of Muslim worshippers.',
+                pillar2Title: '2. Spatial Division',
+                pillar2Desc: 'Targeting the Eastern Area and Bab al-Rahma prayer hall for permanent partition and building a synagogue.',
+                pillar3Title: '3. Moral & Ritual Foundation',
+                pillar3Desc: 'Performing direct Talmudic rituals inside courtyards (Epic Prostration, Shofar blowing, offerings) to strip Islamic sacred exclusivity.',
+                chart2Title: 'Daily Incursion Hours Expansion (2000 - 2026)',
+                chart2Sub: 'Demonstrates accelerated growth of daily entry hours enforced post-2000 Intifada and Kerry Understanding.',
+                chart3Title: 'Talmudic Ritual Escalation Indicators (2015 vs 2026)',
+                chart3Sub: 'Radar chart highlighting dramatic transition from quiet visits to full ritualization and militarization.',
+                sec3Title: 'Interactive Timeline of Turning Points & Popular Uprisings (1917 - 2026)',
+                sec3Desc: 'Chronicles historical milestones, legal frameworks, and grassroots Palestinian uprisings that reshaped deterrence dynamics.',
+                btnAll: 'All (1917-2026)',
+                btnMandate: 'Mandate & Jordanian Era',
+                btnOccupation: 'Occupation & Kerry Accords',
+                btnUprisings: 'Uprisings & Popular Ribat',
+                uprisingChartTitle: 'Breakdown of Popular Uprisings Impact',
+                uprisingBox1Title: 'Bab al-Asbat Uprising (2017)',
+                uprisingBox1Desc: 'Proved the capacity of civil sit-ins to force Israeli retreat, removing smart cameras and electronic gates.',
+                uprisingBox2Title: 'Bab al-Rahma Uprising (2019)',
+                uprisingBox2Desc: 'Publicly reopened the prayer hall closed since 2003, thwarting spatial division plans in the Eastern courtyard.',
+                sec4Title: 'Geopolitical Shifts & "Judaization Arch"',
+                sec4Desc: 'Details the "Decision Plan" forming a Judaization Arch from Hebron to Jerusalem to shift demographic and geographical weight.',
+                plotlyTitle: 'Settlement Pressure Density Distribution (Hebron - Jerusalem Axis)',
+                plotlySub: 'Statistical Canvas/WebGL chart demonstrating concentrated settlement density and excavation activity around Old City.',
+                sec5Title: 'Future Scenarios & Conflict Trajectories',
+                sec5Desc: 'Forecasting Status Quo trajectory across 3 major scenarios balancing annexation policies and Palestinian popular deterrence:',
+                scen1Badge: 'Scenario 1',
+                scen1Title: 'Ibrahimi Mosque Replication Model',
+                scen1Desc: 'Forced takeover of Eastern Courtyard for a synagogue and imposing strict temporal/spatial partition.',
+                scen1Prob: 'Very High',
+                scen1Impact: 'Catastrophic',
+                scen2Badge: 'Scenario 2',
+                scen2Title: 'Structural & Engineering Overhaul',
+                scen2Desc: 'Constructing elevated steel bridges and subterranean networks, turning Al-Aqsa into a suspended upper prayer hall.',
+                scen2Prob: 'Medium - High',
+                scen2Impact: 'Existential',
+                scen3Badge: 'Scenario 3',
+                scen3Title: 'Widespread Explosion & Resistance',
+                scen3Desc: 'Extreme ritual escalation triggers regional escalation, enforcing new deterrence equations forcing Israeli rollback.',
+                scen3Prob: 'Highly Expected',
+                scen3Impact: 'Strategic Shift',
+                probText: 'Likelihood:',
+                impactText: 'Impact:',
+                scenChartTitle: 'Future Scenarios Assessment (Likelihood vs Strategic Impact)',
+                scenChartSub: 'Comparative bar chart highlighting critical balance between occupation measures and community deterrence.',
+                footerTitle: 'Research Summary & Analytical Conclusion',
+                footerDesc: 'Historical analysis proves the original 1852 Status Quo has been systematically deconstructed. Preserving Al-Aqsa remains dependent on popular Jerusalemite Ribat, Hashemite Custodianship, and regional pressure.',
+                footerDept: 'Jerusalem Indicators & Research Unit',
+                footerDate: 'Data Updated: 2026',
+                footerCopyright: 'All historical and analytical data grounded in Sharia Court archives, Waqf records, and research by Ziad Bhies.'
+            }
+        };
+
+        // Helper: Label Wrapping Logic (<= 16 chars)
+        function wrapLabel(str, maxChars = 16) {
+            if (typeof str !== 'string') return str;
+            if (str.length <= maxChars) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > maxChars) {
+                    if (currentLine) lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        }
+
+        // Chart.js Mandatory Tooltip Config
+        const mandatoryTooltipConfig = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Timeline Dataset
+        const timelineData = [
+            {
+                year: '1852 - 1878',
+                titleAr: 'صدور فرمان الوضع القائم وتثبيته دولياً',
+                titleEn: 'Status Quo Firman & International Ratification',
+                category: 'mandate',
+                descAr: 'السلطان عبد المجيد الأول يصدر فرمان تجميد الحيازات. تثبيت ملكية المسجد الأقصى والبراق للأوقاف الإسلامية حصراً في معاهدة برلين 1878.',
+                descEn: 'Ottoman Decree freezes claims. Berliner Treaty (1878) legally confirms exclusive Islamic Waqf ownership of Al-Aqsa and Buraq Wall.',
+                badgeAr: 'الوضع القائم الأصيل', badgeEn: 'Original Status Quo',
+                badgeColor: 'bg-emeraldCustom text-white'
+            },
+            {
+                year: '1917 - 1922',
+                titleAr: 'الانتداب البريطاني وتأسيس المجلس الأعلى',
+                titleEn: 'British Mandate & Supreme Muslim Council',
+                category: 'mandate',
+                descAr: 'دخول بريطانيا القدس وإصدار وعد بلفور. تأسيس المجلس الإسلامي الأعلى برئاسة الحاج أمين الحسيني لحماية المقدرات الوقفية.',
+                descEn: 'British occupation and Balfour Declaration. Creation of Supreme Muslim Council under Haj Amin al-Husseini to defend Waqf assets.',
+                badgeAr: 'بداية الاختراق', badgeEn: 'Initial Penetration',
+                badgeColor: 'bg-amber-600 text-white'
+            },
+            {
+                year: '1929 - 1930',
+                titleAr: 'ثورة البراق وتقرير لجنة شو',
+                titleEn: 'Al-Buraq Revolution & Shaw Commission Report',
+                category: 'uprisings',
+                descAr: 'انتفاضة شعبية عارمة ضد محاولة تغيير معالم حائط البراق. لجنة شو الدولية تؤكد أن الحائط والرصيف ملكية إسلامية وقفية خالصة.',
+                descEn: 'Mass uprising against changes at Buraq Wall. Shaw Commission confirms Wall and pavement are exclusive Islamic Waqf property.',
+                badgeAr: 'هبة شعبية وتثبيت قانوني', badgeEn: 'Uprising & Legal Win',
+                badgeColor: 'bg-emeraldDark text-white'
+            },
+            {
+                year: '1948 - 1967',
+                titleAr: 'الإدارة الأردنية والإعمارات الهاشمية',
+                titleEn: 'Jordanian Administration & Hashemite Restorations',
+                category: 'mandate',
+                descAr: 'خضوع القدس للحكم الأردني، وتنفيذ الإعمار الهاشمي الأول والثاني لتجديد قبة الصخرة والمسجد القبلي والحفاظ على الوضع القائم.',
+                descEn: 'Jerusalem under Jordanian administration. Implementation of 1st and 2nd Hashemite Renovations of Dome of the Rock & Al-Qibli.',
+                badgeAr: 'استقرار سيادي', badgeEn: 'Sovereign Stability',
+                badgeColor: 'bg-blue-700 text-white'
+            },
+            {
+                year: '1967',
+                titleAr: 'احتلال القدس ومصادرة مفتاح باب المغاربة',
+                titleEn: 'Occupation of Jerusalem & Maghariba Key Seizure',
+                category: 'occupation',
+                descAr: 'موشيه ديان يصيغ "الوضع القائم الجديد". الأوقاف تدير الداخل، لكن إسرائيل تصادر مفتاح باب المغاربة وتدمر حارة المغاربة.',
+                descEn: 'Israeli military seizes Jerusalem, confiscates Bab al-Maghariba key, demolishes Moroccan Quarter, initiating security intervention.',
+                badgeAr: 'نقطة انكسار استراتيجية', badgeEn: 'Strategic Fracture',
+                badgeColor: 'bg-crimsonCustom text-white'
+            },
+            {
+                year: '1969',
+                titleAr: 'جريمة حريق المسجد الأقصى',
+                titleEn: 'Arson Attack on Al-Aqsa Mosque',
+                category: 'occupation',
+                descAr: 'إحراق المصلى القبلي ومنبر صلاح الدين على يد مايكل روهان. إطلاق الإعمار الهاشمي الثالث وتأسيس منظمة التعاون الإسلامي.',
+                descEn: 'Arson destroys Saladin Pulpit. Prompts establishment of OIC and 3rd Hashemite Restoration Campaign.',
+                badgeAr: 'عدوان مباشر', badgeEn: 'Direct Aggression',
+                badgeColor: 'bg-crimsonCustom text-white'
+            },
+            {
+                year: '2015',
+                titleAr: 'هبة القدس وتفاهمات كيري',
+                titleEn: 'Jerusalem Uprising & Kerry Understandings',
+                category: 'uprisings',
+                descAr: 'صياغة "تفاهمات كيري": المسلمون يصلون وغير المسلمين يزورون. تحول الاقتحامات من اعتداء عسكري إلى حق سياحي بشرعنة دولية.',
+                descEn: 'Kerry Understandings state "Muslims pray, non-Muslims visit", inadvertently legitimizing daily non-Muslim tourist entry schedules.',
+                badgeAr: 'انتكاسة سياسية', badgeEn: 'Political Setback',
+                badgeColor: 'bg-amber-700 text-white'
+            },
+            {
+                year: '2017',
+                titleAr: 'هبة باب الأسباط (البوابات الإلكترونية)',
+                titleEn: 'Bab al-Asbat Gate Uprising',
+                category: 'uprisings',
+                descAr: 'اعتصام مدني مقدسي حاشد في الشوارع يجبر الاحتلال على التراجع وإزالة البوابات الإلكترونية والكاميرات الذكية.',
+                descEn: 'Mass civil disobedience forces Israeli forces to dismantle metal detectors and smart surveillance cameras.',
+                badgeAr: 'انتصار المرابطين', badgeEn: 'Civil Victory',
+                badgeColor: 'bg-emeraldCustom text-white'
+            },
+            {
+                year: '2019',
+                titleAr: 'هبة باب الرحمة',
+                titleEn: 'Bab al-Rahma Gate Reopening',
+                category: 'uprisings',
+                descAr: 'الجماهير تكسر سلاسل الاحتلال وتفتح مصلى باب الرحمة المغلق منذ 2003، مفشلة المخطط الأول للتقسيم المكاني في الساحة الشرقية.',
+                descEn: 'Worshippers break police seals, reopening Bab al-Rahma hall closed since 2003, thwarting Eastern Courtyard partition.',
+                badgeAr: 'إفشال التقسيم المكاني', badgeEn: 'Partition Thwarted',
+                badgeColor: 'bg-emeraldCustom text-white'
+            },
+            {
+                year: '2021',
+                titleAr: 'معركة سيف القدس',
+                titleEn: 'Sword of Jerusalem Escalation',
+                category: 'uprisings',
+                descAr: 'ربط العسكرية الشعبية في غزة بالدفاع عن الأقصى والشيخ جراح، ورسم معادلة ردع إقليمية جديدة لحماية المقدسات.',
+                descEn: 'Linking Gaza deterrence directly to defense of Jerusalem and Al-Aqsa, establishing a regional response formula.',
+                badgeAr: 'ترسيخ معادلة الردع', badgeEn: 'Deterrence Framework',
+                badgeColor: 'bg-navyCustom text-white'
+            },
+            {
+                year: '2026',
+                titleAr: 'انهيار الوضع القائم والتأسيس الطقوسي',
+                titleEn: 'Collapse of Status Quo & Ritual Substitution',
+                category: 'occupation',
+                descAr: 'تمديد ساعات الاقتحام إلى 6.5 ساعة، إدخال أوراق الصلاة التوراتية، السجود الملحمي الجماعي، و7 محاولات لإدخال القرابين.',
+                descEn: 'Incursion slots expand to 6.5h daily, widespread epic prostration, blown shofars, and official protection for Talmudic ceremonies.',
+                badgeAr: 'الإحلال الديني التام', badgeEn: 'Full Substitution',
+                badgeColor: 'bg-crimsonCustom text-white'
+            }
+        ];
+
+        // Chart References
+        let historicalChartObj, intrusionChartObj, radarChartObj, uprisingChartObj, scenarioChartObj;
+
+        // Render Timeline Function
+        function renderTimeline(data) {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+            data.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'relative group bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-goldCustom transition-all shadow-sm';
+                const title = currentLang === 'ar' ? item.titleAr : item.titleEn;
+                const desc = currentLang === 'ar' ? item.descAr : item.descEn;
+                const badge = currentLang === 'ar' ? item.badgeAr : item.badgeEn;
+                
+                const dotPos = currentLang === 'ar' ? '-right-[31px]' : '-left-[31px]';
+
+                el.innerHTML = `
+                    <div class="absolute ${dotPos} top-6 w-4 h-4 rounded-full bg-navyCustom border-4 border-white shadow"></div>
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-black text-goldCustom">${item.year}</span>
+                        <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full ${item.badgeColor}">${badge}</span>
+                    </div>
+                    <h4 class="font-bold text-navyCustom text-base mb-1">${title}</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">${desc}</p>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function filterTimeline(category) {
+            document.querySelectorAll('.tl-btn').forEach(btn => {
+                btn.classList.remove('bg-navyCustom', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-700');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-700');
+            event.target.classList.add('bg-navyCustom', 'text-white');
+
+            if (category === 'all') {
+                renderTimeline(timelineData);
+            } else {
+                const filtered = timelineData.filter(item => item.category === category);
+                renderTimeline(filtered);
+            }
+        }
+
+        // Initialize / Re-render Charts
+        function initCharts() {
+            // Destroy existing charts if re-rendering language
+            if (historicalChartObj) historicalChartObj.destroy();
+            if (intrusionChartObj) intrusionChartObj.destroy();
+            if (radarChartObj) radarChartObj.destroy();
+            if (uprisingChartObj) uprisingChartObj.destroy();
+            if (scenarioChartObj) scenarioChartObj.destroy();
+
+            const isAr = currentLang === 'ar';
+
+            // Chart 1: Historical Eras
+            const historicalCtx = document.getElementById('historicalEraChart').getContext('2d');
+            const historicalLabels = isAr ? [
+                'العهد العثماني (1852)',
+                'الانتداب البريطاني (1917)',
+                'الحكم الأردني (1948)',
+                'الاحتلال الإسرائيلي (1967)',
+                'مرحلة الإحلال (2026)'
+            ] : [
+                'Ottoman Era (1852)',
+                'British Mandate (1917)',
+                'Jordanian Era (1948)',
+                'Israeli Occupation (1967)',
+                'Substitution Era (2026)'
+            ];
+
+            historicalChartObj = new Chart(historicalCtx, {
+                type: 'bar',
+                data: {
+                    labels: historicalLabels.map(l => wrapLabel(l, 18)),
+                    datasets: [
+                        {
+                            label: isAr ? 'سيادة الأوقاف الإسلامية' : 'Islamic Waqf Authority',
+                            data: [100, 85, 95, 45, 15],
+                            backgroundColor: '#0f5132'
+                        },
+                        {
+                            label: isAr ? 'السيطرة والتدخل الإسرائيلي' : 'Israeli Occupation Control',
+                            data: [0, 15, 5, 55, 85],
+                            backgroundColor: '#dc2626'
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true, max: 100, ticks: { callback: v => v + '%' } },
+                        y: { stacked: true }
+                    },
+                    plugins: {
+                        ...mandatoryTooltipConfig.plugins,
+                        legend: { position: 'bottom', labels: { font: { size: 11 } } }
+                    }
+                }
+            });
+
+            // Chart 2: Daily Intrusion Hours
+            const intrusionCtx = document.getElementById('intrusionHoursChart').getContext('2d');
+            const intrusionLabels = isAr ? ['2000', '2005', '2010', '2015', '2020', '2026'] : ['2000', '2005', '2010', '2015', '2020', '2026'];
+            intrusionChartObj = new Chart(intrusionCtx, {
+                type: 'line',
+                data: {
+                    labels: intrusionLabels,
+                    datasets: [{
+                        label: isAr ? 'ساعات الاقتحام اليومية' : 'Daily Incursion Hours',
+                        data: [0, 2.5, 3.5, 4.5, 5.0, 6.5],
+                        borderColor: '#d97706',
+                        backgroundColor: 'rgba(217, 119, 6, 0.15)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { callback: v => v + (isAr ? ' ساعات' : ' hrs') } }
+                    },
+                    plugins: {
+                        ...mandatoryTooltipConfig.plugins,
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Chart 3: Ritual Escalation Radar
+            const radarCtx = document.getElementById('ritualRadarChart').getContext('2d');
+            const radarLabels = isAr ? [
+                'إدخال كتب الصلاة', 'السجود الملحمي', 'النفخ بالشوفار', 'رفع الأعلام', 'تقديم القرابين', 'عسكرة الساحات'
+            ] : [
+                'Prayer Books', 'Epic Prostration', 'Shofar Blowing', 'Flag Hoisting', 'Offerings Attempt', 'Yard Militarization'
+            ];
+            radarChartObj = new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: radarLabels.map(l => wrapLabel(l, 14)),
+                    datasets: [
+                        {
+                            label: isAr ? 'وضع 2015' : 'Status 2015',
+                            data: [15, 10, 5, 20, 5, 30],
+                            borderColor: '#1e293b',
+                            backgroundColor: 'rgba(30, 41, 59, 0.2)'
+                        },
+                        {
+                            label: isAr ? 'وضع 2026' : 'Status 2026',
+                            data: [95, 90, 85, 90, 75, 95],
+                            borderColor: '#dc2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.25)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { min: 0, max: 100, ticks: { display: false } } },
+                    plugins: {
+                        ...mandatoryTooltipConfig.plugins,
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 4: Uprising Outcome Breakdown
+            const uprisingCtx = document.getElementById('uprisingOutcomeChart').getContext('2d');
+            const uprisingLabels = isAr ? [
+                'إفشال مخطط أمني حاسم',
+                'تثبيت فتح المصليات',
+                'فرض معادلة ردع العسكرية',
+                'تراجعات إسرائيلية تكتيكية'
+            ] : [
+                'Thwarting Security Plan',
+                'Reopening Prayer Halls',
+                'Deterrence Equations',
+                'Tactical Police Retreats'
+            ];
+            uprisingChartObj = new Chart(uprisingCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: uprisingLabels.map(l => wrapLabel(l, 16)),
+                    datasets: [{
+                        data: [35, 25, 25, 15],
+                        backgroundColor: ['#0f5132', '#d97706', '#1e293b', '#dc2626']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        ...mandatoryTooltipConfig.plugins,
+                        legend: { position: 'bottom', labels: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Chart 5: Plotly Heatmap
+            const plotlyXText = isAr ? 
+                ['جنوب الخليل', 'الحرم الإبراهيمي', 'جنوب القدس', 'البلدة القديمة', 'ساحات الأقصى', 'الشيخ جراح', 'شمال القدس'] :
+                ['S. Hebron', 'Ibrahimi Mosque', 'S. Jerusalem', 'Old City', 'Al-Aqsa Courtyard', 'Sheikh Jarrah', 'N. Jerusalem'];
+
+            const plotlyData = [{
+                x: [1, 2, 3, 4, 5, 6, 7],
+                y: [20, 35, 45, 85, 95, 60, 40],
+                mode: 'markers+lines',
+                type: 'scattergl',
+                marker: {
+                    size: [15, 20, 25, 45, 50, 30, 20],
+                    color: ['#0f5132', '#0f5132', '#d97706', '#dc2626', '#dc2626', '#d97706', '#0f5132']
+                },
+                line: { color: '#1e293b', width: 2 }
+            }];
+
+            const plotlyLayout = {
+                margin: { t: 20, r: 20, b: 40, l: 40 },
+                xaxis: { tickvals: [1, 2, 3, 4, 5, 6, 7], ticktext: plotlyXText },
+                yaxis: { title: isAr ? 'مؤشر الكثافة الاستيطانية' : 'Settlement Pressure Index' },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent'
+            };
+            Plotly.newPlot('plotlyHeatmapContainer', plotlyData, plotlyLayout, { responsive: true, displayModeBar: false });
+
+            // Chart 6: Scenarios
+            const scenarioCtx = document.getElementById('scenarioChart').getContext('2d');
+            const scenarioLabels = isAr ? [
+                'السيناريو 1: نموذج المسجد الإبراهيمي',
+                'السيناريو 2: التغيير الهندسي الفولاذي',
+                'السيناريو 3: الانفجار والمواجهة الشاملة'
+            ] : [
+                'Scenario 1: Ibrahimi Model',
+                'Scenario 2: Steel Overhaul',
+                'Scenario 3: Regional Escalation'
+            ];
+
+            scenarioChartObj = new Chart(scenarioCtx, {
+                type: 'bar',
+                data: {
+                    labels: scenarioLabels.map(l => wrapLabel(l, 18)),
+                    datasets: [
+                        {
+                            label: isAr ? 'احتمالية التحقق الميداني' : 'Likelihood Index',
+                            data: [85, 65, 75],
+                            backgroundColor: '#d97706'
+                        },
+                        {
+                            label: isAr ? 'مؤشر الخطورة والتأثير' : 'Strategic Impact Index',
+                            data: [90, 95, 80],
+                            backgroundColor: '#dc2626'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } }
+                    },
+                    plugins: {
+                        ...mandatoryTooltipConfig.plugins,
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        // Toggle Language Function
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.documentElement;
+            html.lang = currentLang;
+            html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+            // Update UI elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18nData[currentLang][key]) {
+                    el.innerText = i18nData[currentLang][key];
+                }
+            });
+
+            // Update Toggle Button Text
+            document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+
+            // Re-render timeline & charts
+            renderTimeline(timelineData);
+            initCharts();
+        }
+
+        // DOM Ready Initializer
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTimeline(timelineData);
+            initCharts();
+        });
+    </script>
+</body>
+</html>
